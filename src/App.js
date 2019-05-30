@@ -5,14 +5,14 @@ function Stat({ title = 'Stat', value = 5 }) {
   return (
     <div className="w-1/2 h-1/2 uppercase leading-none flex flex-col justify-center">
       <p className="text-6xl font-semibold text-white">{value}</p>
-      <p className="text-xl pt-3 font-semibold text-gray-600">{title}</p>
+      <p className="text-xl pt-2 font-semibold text-gray-600">{title}</p>
     </div>
   );
 }
 
-function Repo({ name }) {
+function Project({ name }) {
   return (
-    <div className="bg-gray-800 text-white w-1/2 h-1/2 p-8 shadow-2xl rounded flex flex-col">
+    <div className="border-t-12 border-gray-600 bg-gray-800 text-white w-1/2 h-1/2 px-8 py-4 shadow-2xl rounded-lg flex flex-col">
       <p className="font-semibold text-3xl text-white">{name}</p>
 
       <div className="text-xl mt-3 flex-1 flex flex-wrap">
@@ -32,7 +32,7 @@ function App() {
         EmberMap Dashboard
       </header>
       <main className="flex-1 p-16 flex items-center justify-center">
-        <Repo name="ember-cli-mirage" />
+        <Project name="ember-cli-mirage" />
       </main>
     </div>
   );
