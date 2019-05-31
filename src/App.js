@@ -2,21 +2,55 @@ import React from "react";
 import "./App.css";
 
 function App() {
+  let reloadApp = () => {
+    window.location.reload();
+  };
+
   return (
-    <div className="flex bg-gray-900 w-screen h-screen flex flex-col">
-      <header className="bg-gray-900 px-8 pt-16">
+    <div className="px-8 flex bg-gray-900 w-screen h-screen flex flex-col">
+      <header className="bg-gray-900 pt-16">
         <p className="text-gray-500 text-2xl uppercase">Top priority</p>
         <p className="text-white font-semibold text-4xl leading-snug">
           Ship ember-cli-mirage@1.1.0 that depends on @miragejs/server
         </p>
       </header>
 
-      <main className="flex-1 px-8 pt-16">
+      <div className="mt-16">
+        <p className="text-gray-500 text-2xl uppercase">
+          Week of June 3–7, 2019
+        </p>
+        <div className="flex mt-2">
+          <div className="w-1/2">
+            <p className="text-white font-bold text-2xl">Ryan</p>
+            <ul className="text-white text-2xl">
+              <li className="ml-4">– Video: How to use Ember CLI Clock</li>
+              <li className="ml-4">– Ship Newsletters</li>
+            </ul>
+          </div>
+          <div className="w-1/2">
+            <p className="text-white font-bold text-2xl">Sam</p>
+            <ul className="text-white text-2xl">
+              <li className="ml-4">– N / A</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <main className="flex-1 pt-16">
         <p className="text-gray-500 text-2xl uppercase">Projects</p>
         <div className="mt-3">
           <Project name="ember-cli-mirage" />
         </div>
       </main>
+
+      <div className="text-right pb-6">
+        <button
+          onClick={reloadApp}
+          className="bg-gray-700 text-2xl font-semibold text-gray-200 px-8 py-4 rounded"
+        >
+          Reload
+        </button>
+      </div>
     </div>
   );
 }
