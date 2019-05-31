@@ -23,7 +23,7 @@ function App() {
           <div className="w-1/2">
             <p className="text-white font-bold text-2xl">Ryan</p>
             <ul className="text-white text-2xl">
-              <li className="ml-4">– Video: How to use Ember CLI Clock</li>
+              <li className="ml-4">– Video on How to use Ember CLI Clock</li>
               <li className="ml-4">– Ship Newsletters</li>
             </ul>
           </div>
