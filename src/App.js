@@ -13,7 +13,7 @@ function Stat({ title = "Stat", value = 5 }) {
 function Project({ name }) {
   return (
     <div className="border-t-12 border-gray-600 bg-gray-800 text-white w-1/2 h-1/2 px-8 py-4 shadow-2xl rounded-lg flex flex-col">
-      <p className="font-semibold text-3xl text-white">{name}</p>
+      <p className="font-semibold text-3xl text-white">{name}s</p>
 
       <div className="text-xl mt-3 flex-1 flex flex-wrap">
         <Stat title="Untriaged issues" value={28} />
