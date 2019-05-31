@@ -1,7 +1,7 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-function Stat({ title = 'Stat', value = 5 }) {
+function Stat({ title = "Stat", value = 5 }) {
   return (
     <div className="w-1/2 h-1/2 uppercase leading-none flex flex-col justify-center">
       <p className="text-6xl font-semibold text-white">{value}</p>
@@ -19,7 +19,7 @@ function Project({ name }) {
         <Stat title="Untriaged issues" value={28} />
         <Stat title="Bugs" value={400} />
         <Stat title="Dependabot PRs" value={3} />
-        <Stat title="NPM downloads" value={'40k'} />
+        <Stat title="NPM downloads" value={"40k"} />
       </div>
     </div>
   );
