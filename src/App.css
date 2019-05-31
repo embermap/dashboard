@@ -1,6 +1,9 @@
 .h-1\/2 {
   height: 50%;
 }
+.h-1\/3 {
+  height: 33.3333%;
+}
 
 .border-t-12 {
   border-top-width: 12px;
