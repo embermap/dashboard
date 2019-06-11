@@ -16,21 +16,18 @@ function App() {
       </header>
 
       <div className="mt-16">
-        <p className="text-gray-500 text-2xl uppercase">
-          Week of June 3–7, 2019
-        </p>
+        <p className="text-gray-500 text-2xl uppercase">This week</p>
         <div className="flex mt-2">
           <div className="w-1/2">
             <p className="text-white font-bold text-2xl">Ryan</p>
             <ul className="text-white text-2xl">
-              <li className="ml-4">– Video on How to use Ember CLI Clock</li>
-              <li className="ml-4">– Ship Newsletters</li>
+              <li className="ml-4">– [ Nothing yet ]</li>
             </ul>
           </div>
           <div className="w-1/2">
             <p className="text-white font-bold text-2xl">Sam</p>
             <ul className="text-white text-2xl">
-              <li className="ml-4">– N / A</li>
+              <li className="ml-4">– Ember Animated vid</li>
             </ul>
           </div>
         </div>
