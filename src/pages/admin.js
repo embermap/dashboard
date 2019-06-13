@@ -190,6 +190,7 @@ function Todo({ todo: seedTodo, didSave, didDelete }) {
               onChange={handleChange}
               onBlur={handleBlur}
               onKeyDown={handleKeyDown}
+              disabled={isSaving}
               autoFocus
               className={`w-full bg-transparent focus:outline-none ${isSaving &&
                 "opacity-50"}`}
