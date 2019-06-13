@@ -29,7 +29,7 @@ export function useCreate(resourceName) {
     return new Promise((resolve, reject) => {
       fetch(`/api/${resourceName}s`, {
         method: "POST",
-        body: JSON.stringify({ resource })
+        body: JSON.stringify({ [resourceName]: resource })
       })
         .then(response => response.json())
         .then(json => {
@@ -46,7 +46,7 @@ export function useCreate(resourceName) {
 
 export function useResource(resourceName, id) {
   let [isSaving, setIsSaving] = useState(false);
-  let { data, replaceResource } = useContext(StoreContext);
+  let { data, replaceResource, removeResource } = useContext(StoreContext);
 
   let resource = data[resourceName].find(resource => resource.id === id);
 
@@ -68,5 +68,13 @@ export function useResource(resourceName, id) {
     });
   }
 
-  return [resource, { save, isSaving }];
+  function destroy() {
+    return fetch(`/api/${resourceName}s/${id}`, {
+      method: "DELETE"
+    }).then(() => {
+      removeResource(resourceName, id);
+    });
+  }
+
+  return [resource, { save, isSaving, destroy }];
 }

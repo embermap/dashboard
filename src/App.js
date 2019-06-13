@@ -29,12 +29,19 @@ function App() {
     setData({ ...data });
   }
 
+  function removeResource(resourceName, id) {
+    let rest = data[resourceName].filter(resource => resource.id !== id);
+    data[resourceName] = [...rest];
+    setData({ ...data });
+  }
+
   let storeContextValue = {
     data,
     fetched,
     updateCollection,
     addToCollection,
-    replaceResource
+    replaceResource,
+    removeResource
   };
 
   return (

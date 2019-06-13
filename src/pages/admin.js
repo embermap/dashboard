@@ -121,11 +121,10 @@ function TodoList({ todos, updateTodos, removeTodo }) {
 
 function Todo({ todo: seedTodo, didSave, didDelete }) {
   let [isEditing, setIsEditing] = useState(false);
-  // let [isSaving, setIsSaving] = useState(false);
   let [localTodo, setLocalTodo] = useState({ ...seedTodo });
   let [isChecked, setIsChecked] = useState(false);
 
-  let [todo, { save, isSaving }] = useResource("todo", seedTodo.id);
+  let [todo, { save, isSaving, destroy }] = useResource("todo", seedTodo.id);
 
   function handleCheckboxChange(event) {
     setIsChecked(event.target.checked);
@@ -134,16 +133,12 @@ function Todo({ todo: seedTodo, didSave, didDelete }) {
   useEffect(() => {
     if (isChecked) {
       let id = setTimeout(() => {
-        fetch(`/api/todos/${todo.id}`, {
-          method: "DELETE"
-        }).then(() => {
-          didDelete(todo);
-        });
+        destroy();
       }, 1000);
 
       return () => clearTimeout(id);
     }
-  }, [isChecked, todo, didDelete]);
+  }, [isChecked, destroy]);
 
   function handleCheckboxClick(event) {
     event.stopPropagation();
