@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/spinner";
-import { useFindAll, useCreate } from "../hooks/resources";
+import { useFindAll, useCreate, useResource } from "../hooks/resources";
 
 export default function() {
   let [todos, { isLoading }] = useFindAll("todo");
@@ -119,11 +119,13 @@ function TodoList({ todos, updateTodos, removeTodo }) {
   );
 }
 
-function Todo({ todo, didSave, didDelete }) {
+function Todo({ todo: seedTodo, didSave, didDelete }) {
   let [isEditing, setIsEditing] = useState(false);
-  let [isSaving, setIsSaving] = useState(false);
-  let [localTodo, setLocalTodo] = useState({ ...todo });
+  // let [isSaving, setIsSaving] = useState(false);
+  let [localTodo, setLocalTodo] = useState({ ...seedTodo });
   let [isChecked, setIsChecked] = useState(false);
+
+  let [todo, { save, isSaving }] = useResource("todo", seedTodo.id);
 
   function handleCheckboxChange(event) {
     setIsChecked(event.target.checked);
@@ -157,7 +159,7 @@ function Todo({ todo, didSave, didDelete }) {
   }
 
   function handleBlur() {
-    setIsEditing(false);
+    saveChanges();
   }
 
   function handleKeyDown(event) {
@@ -168,18 +170,13 @@ function Todo({ todo, didSave, didDelete }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    saveChanges();
+  }
 
-    setIsSaving(true);
-    fetch(`/api/todos/${todo.id}`, {
-      method: "PATCH",
-      body: JSON.stringify({ todo: localTodo })
-    })
-      .then(res => res.json())
-      .then(() => {
-        setIsSaving(false);
-        setIsEditing(false);
-        didSave(localTodo);
-      });
+  function saveChanges() {
+    save(localTodo).then(() => {
+      setIsEditing(false);
+    });
   }
 
   return (

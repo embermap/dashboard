@@ -2,7 +2,7 @@ import { StoreContext } from "../app";
 import { useState, useEffect, useContext } from "react";
 
 export function useFindAll(resourceName) {
-  const { data, fetched, updateCollection } = useContext(StoreContext);
+  let { data, fetched, updateCollection } = useContext(StoreContext);
 
   useEffect(() => {
     if (!fetched.has(resourceName)) {
@@ -20,16 +20,16 @@ export function useFindAll(resourceName) {
 }
 
 export function useCreate(resourceName) {
-  const { addToCollection } = useContext(StoreContext);
+  let { addToCollection } = useContext(StoreContext);
   let [isSaving, setIsSaving] = useState(false);
 
-  function create(todo) {
+  function create(resource) {
     setIsSaving(true);
 
     return new Promise((resolve, reject) => {
       fetch(`/api/${resourceName}s`, {
         method: "POST",
-        body: JSON.stringify({ todo })
+        body: JSON.stringify({ resource })
       })
         .then(response => response.json())
         .then(json => {
@@ -42,4 +42,31 @@ export function useCreate(resourceName) {
   }
 
   return [create, { isSaving }];
+}
+
+export function useResource(resourceName, id) {
+  let [isSaving, setIsSaving] = useState(false);
+  let { data, replaceResource } = useContext(StoreContext);
+
+  let resource = data[resourceName].find(resource => resource.id === id);
+
+  function save(resource) {
+    setIsSaving(true);
+
+    return new Promise((resolve, reject) => {
+      fetch(`/api/${resourceName}s/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ [resourceName]: resource })
+      })
+        .then(res => res.json())
+        .then(json => {
+          setIsSaving(false);
+          replaceResource(resourceName, json);
+
+          resolve(json);
+        });
+    });
+  }
+
+  return [resource, { save, isSaving }];
 }

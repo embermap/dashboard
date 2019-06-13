@@ -11,9 +11,9 @@ function App() {
   let [data, setData] = useState({});
   let [fetched, setFetched] = useState(new Set([]));
 
-  function updateCollection(resourceName, collectionData) {
+  function updateCollection(resourceName, resourceData) {
     setFetched(fetched.add(resourceName));
-    setData({ ...data, [resourceName]: collectionData });
+    setData({ ...data, [resourceName]: resourceData });
   }
 
   function addToCollection(resourceName, resourceData) {
@@ -21,11 +21,20 @@ function App() {
     setData({ ...data });
   }
 
+  function replaceResource(resourceName, resourceData) {
+    let rest = data[resourceName].filter(
+      resource => resource.id !== resourceData.id
+    );
+    data[resourceName] = [...rest, resourceData];
+    setData({ ...data });
+  }
+
   let storeContextValue = {
     data,
     fetched,
     updateCollection,
-    addToCollection
+    addToCollection,
+    replaceResource
   };
 
   return (
