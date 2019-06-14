@@ -36,18 +36,6 @@ Todo.init(
 async function main() {
   await Todo.sync();
 
-  // Now the `users` table in the database corresponds to the model definition
-  Todo.create({
-    text: "To do",
-    author: "Ryan",
-    position: 1
-  });
-  Todo.create({
-    text: "Another",
-    author: "Ryan",
-    position: 2
-  });
-
   app.use(bodyParser.json());
 
   app.get("/api/todos", async (req, res) => {
