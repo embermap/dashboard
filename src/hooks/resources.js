@@ -29,6 +29,9 @@ export function useCreate(resourceName) {
     return new Promise((resolve, reject) => {
       fetch(`/api/${resourceName}s`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({ [resourceName]: resource })
       })
         .then(response => response.json())
@@ -56,6 +59,9 @@ export function useResource(resourceName, id) {
     return new Promise((resolve, reject) => {
       fetch(`/api/${resourceName}s/${id}`, {
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({ [resourceName]: resource })
       })
         .then(res => res.json())
@@ -91,6 +97,9 @@ export function useSaveResources(resourceName) {
         return new Promise((resolve, reject) => {
           fetch(`/api/${resourceName}s/${resource.id}`, {
             method: "PATCH",
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify({ [resourceName]: resource })
           })
             .then(res => res.json())

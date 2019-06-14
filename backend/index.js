@@ -1,22 +1,82 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
 const Sequelize = require("sequelize");
+const bodyParser = require("body-parser");
 
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./db.sqlite"
-});
+// ENV variables
+const PORT = process.env.PORT || 3000;
+const DATABASE =
+  process.env.DATABASE || "postgres://localhost:5432/dashboard_development";
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch(err => {
-    console.error("Unable to connect to the database:", err);
+const sequelize = new Sequelize(DATABASE);
+
+const Model = Sequelize.Model;
+class Todo extends Model {}
+Todo.init(
+  {
+    // attributes
+    text: {
+      type: Sequelize.STRING
+    },
+    author: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    position: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    }
+  },
+  {
+    sequelize,
+    modelName: "todo"
+  }
+);
+
+async function main() {
+  await Todo.sync({ force: true });
+
+  // Now the `users` table in the database corresponds to the model definition
+  Todo.create({
+    text: "To do",
+    author: "Ryan",
+    position: 1
+  });
+  Todo.create({
+    text: "Another",
+    author: "Ryan",
+    position: 2
   });
 
-app.get("/api/todos", (req, res) => res.send("Foo!"));
+  app.use(bodyParser.json());
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+  app.get("/api/todos", async (req, res) => {
+    let todos = await Todo.findAll();
+
+    res.json(todos);
+  });
+
+  app.post("/api/todos", async (req, res) => {
+    let todo = await Todo.create(req.body.todo);
+
+    res.json(todo);
+  });
+
+  app.patch("/api/todos/:id", async (req, res) => {
+    let todo = await Todo.findByPk(req.params.id);
+    await todo.update(req.body.todo);
+
+    res.json(todo);
+  });
+
+  app.delete("/api/todos/:id", async (req, res) => {
+    let todo = await Todo.findByPk(req.params.id);
+    await todo.destroy();
+
+    res.status(204).send();
+  });
+
+  app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
+}
+
+main();
