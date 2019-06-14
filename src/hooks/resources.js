@@ -92,25 +92,22 @@ export function useSaveResources(resourceName) {
   function save(resources) {
     setIsSaving(true);
 
-    return Promise.all(
-      resources.map(resource => {
-        return new Promise((resolve, reject) => {
-          fetch(`/api/${resourceName}s/${resource.id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ [resourceName]: resource })
-          })
-            .then(res => res.json())
-            .then(json => {
-              replaceResource(resourceName, json);
-
-              resolve(json);
-            });
-        });
+    return new Promise((resolve, reject) => {
+      fetch(`/api/${resourceName}s`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(resources)
       })
-    ).then(() => {
+        .then(res => res.json())
+        .then(todos => {
+          todos.forEach(todo => {
+            replaceResource(resourceName, todo);
+          });
+
+          resolve(todos);
+        });
       setIsSaving(false);
     });
   }

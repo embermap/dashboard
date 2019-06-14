@@ -16,6 +16,15 @@ window.server = new Server({
     this.namespace = "api";
 
     this.resource("todo");
+    this.patch("todos", (schema, request) => {
+      let todos = JSON.parse(request.requestBody);
+
+      todos.forEach(todo => {
+        schema.todos.find(todo.id).update(todo);
+      });
+
+      return todos;
+    });
   },
 
   scenarios: {

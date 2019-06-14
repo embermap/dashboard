@@ -62,6 +62,19 @@ async function main() {
     res.json(todo);
   });
 
+  app.patch("/api/todos", async (req, res) => {
+    let json = req.body;
+    let todos = [];
+
+    for (let todoJson of json) {
+      let todo = await Todo.findByPk(todoJson.id);
+      await todo.update(todoJson);
+      todos.push(todo);
+    }
+
+    res.json(todos);
+  });
+
   app.patch("/api/todos/:id", async (req, res) => {
     let todo = await Todo.findByPk(req.params.id);
     await todo.update(req.body.todo);
