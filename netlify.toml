@@ -1,5 +1,11 @@
-# A basic redirect rule
+# API proxying
 [[redirects]]
   from = "/api/*"
   to = "https://embermap-dashboard-backend.herokuapp.com/api/:splat"
+  status = 200
+
+# SPA push state routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
