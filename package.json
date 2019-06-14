@@ -19,8 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "be": "node backend/index.js",
-    "be:dev": "nodemon backend/index.js"
+    "server": "node backend/index.js",
+    "server:dev": "nodemon backend/index.js"
   },
   "proxy": "http://localhost:3000",
   "eslintConfig": {
