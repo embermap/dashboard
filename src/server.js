@@ -38,6 +38,16 @@ window.server = new Server({
         text: "Ember Animated vid",
         position: 1
       });
+      server.create("todo", {
+        author: "Sam",
+        text: "Lorem",
+        position: 3
+      });
+      server.create("todo", {
+        author: "Sam",
+        text: "Ipsum",
+        position: 4
+      });
     }
   }
 });

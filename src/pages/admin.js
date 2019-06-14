@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/spinner";
-import { useFindAll, useCreate, useResource } from "../hooks/resources";
+import {
+  useFindAll,
+  useCreate,
+  useResource,
+  useSaveResources
+} from "../hooks/resources";
+import { Sortable } from "@shopify/draggable";
 
 export default function() {
   let [todos, { isLoading }] = useFindAll("todo");
@@ -105,13 +111,63 @@ function TodoForm({ todo: seedTodo }) {
   );
 }
 
+function useSortable(items, handleSort) {
+  let listRef = useRef(null);
+
+  useEffect(() => {
+    function move(oldIndex, newIndex) {
+      const itemRemovedArray = [
+        ...items.slice(0, oldIndex),
+        ...items.slice(oldIndex + 1, items.length)
+      ];
+
+      return [
+        ...itemRemovedArray.slice(0, newIndex),
+        items[oldIndex],
+        ...itemRemovedArray.slice(newIndex, itemRemovedArray.length)
+      ];
+    }
+
+    let sortable = new Sortable(listRef.current, {
+      draggable: ".draggable-item"
+    });
+
+    sortable.on("sortable:stop", ({ oldIndex, newIndex }) => {
+      handleSort(move(oldIndex, newIndex));
+    });
+
+    return () => sortable.destroy();
+  }, [items, handleSort]);
+
+  return {
+    bindList: () => ({
+      ref: listRef
+    }),
+    bindItem: el => ({
+      className: "draggable-item"
+    }),
+    items
+  };
+}
+
 function TodoList({ todos, updateTodos, removeTodo }) {
+  let { save } = useSaveResources("todo");
+  let { items, bindList, bindItem } = useSortable(todos, newItems => {
+    let reorderedTodos = newItems.map((todo, index) => {
+      todo.position = index + 1;
+
+      return todo;
+    });
+
+    save(reorderedTodos);
+  });
+
   return (
-    <ul>
-      {todos
+    <ul {...bindList()}>
+      {items
         .sort((a, b) => a.position - b.position)
         .map(todo => (
-          <li key={todo.id}>
+          <li key={todo.id} {...bindItem()}>
             <Todo todo={todo} didSave={updateTodos} didDelete={removeTodo} />
           </li>
         ))}

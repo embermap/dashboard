@@ -78,3 +78,33 @@ export function useResource(resourceName, id) {
 
   return [resource, { save, isSaving, destroy }];
 }
+
+export function useSaveResources(resourceName) {
+  let [isSaving, setIsSaving] = useState(false);
+  let { replaceResource } = useContext(StoreContext);
+
+  function save(resources) {
+    setIsSaving(true);
+
+    return Promise.all(
+      resources.map(resource => {
+        return new Promise((resolve, reject) => {
+          fetch(`/api/${resourceName}s/${resource.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ [resourceName]: resource })
+          })
+            .then(res => res.json())
+            .then(json => {
+              replaceResource(resourceName, json);
+
+              resolve(json);
+            });
+        });
+      })
+    ).then(() => {
+      setIsSaving(false);
+    });
+  }
+
+  return { save, isSaving };
+}

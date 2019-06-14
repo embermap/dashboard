@@ -8,3 +8,7 @@
 .border-t-12 {
   border-top-width: 12px;
 }
+
+.draggable-source--is-dragging {
+  opacity: 0;
+}
