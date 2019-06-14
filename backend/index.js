@@ -66,11 +66,13 @@ async function main() {
     let json = req.body;
     let todos = [];
 
-    for (let todoJson of json) {
-      let todo = await Todo.findByPk(todoJson.id);
-      await todo.update(todoJson);
-      todos.push(todo);
-    }
+    await sequelize.transaction(async transaction => {
+      for (let todoJson of json) {
+        let todo = await Todo.findByPk(todoJson.id);
+        await todo.update(todoJson, { transaction });
+        todos.push(todo);
+      }
+    });
 
     res.json(todos);
   });
