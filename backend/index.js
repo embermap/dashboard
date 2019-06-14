@@ -5,10 +5,10 @@ const bodyParser = require("body-parser");
 
 // ENV variables
 const PORT = process.env.PORT || 3000;
-const DATABASE =
-  process.env.DATABASE || "postgres://localhost:5432/dashboard_development";
+const DATABASE_URL =
+  process.env.DATABASE_URL || "postgres://localhost:5432/dashboard_development";
 
-const sequelize = new Sequelize(DATABASE);
+const sequelize = new Sequelize(DATABASE_URL);
 
 const Model = Sequelize.Model;
 class Todo extends Model {}
