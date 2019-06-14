@@ -34,7 +34,7 @@ Todo.init(
 );
 
 async function main() {
-  await Todo.sync({ force: true });
+  await Todo.sync();
 
   // Now the `users` table in the database corresponds to the model definition
   Todo.create({
