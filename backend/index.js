@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const Sequelize = require("sequelize");
 const bodyParser = require("body-parser");
+const nocache = require("nocache");
 
 // ENV variables
 const PORT = process.env.PORT || 3000;
@@ -36,6 +37,7 @@ Todo.init(
 async function main() {
   await Todo.sync();
 
+  app.use(nocache());
   app.use(bodyParser.json());
 
   app.get("/api/todos", async (req, res) => {
