@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import "./server";
-import "./app.css";
+import "./app2.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
 import Admin from "./pages/admin";
