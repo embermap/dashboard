@@ -1,4 +1,4 @@
-import { StoreContext } from "../app2";
+import { StoreContext } from "../app";
 import { useState, useEffect, useContext } from "react";
 
 export function useFindAll(resourceName) {
