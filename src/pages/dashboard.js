@@ -7,7 +7,7 @@ export default function() {
     window.location.reload();
   };
 
-  let [todos, { isLoading }] = useFindAll("todo");
+  let [todos, { isLoading }] = useFindAll("todo", { refresh: 2000 });
 
   let samsTodos = todos
     .filter(todo => todo.author === "Sam")

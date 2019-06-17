@@ -16,7 +16,7 @@
     "sequelize": "^5.8.9"
   },
   "scripts": {
-    "start": "PORT=3001 react-scripts start",
+    "start": "PORT=4200 react-scripts start",
     "build": "react-scripts build",
     "heroku-postbuild": "echo Skip build on Heroku",
     "test": "react-scripts test",

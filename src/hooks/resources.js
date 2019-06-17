@@ -1,18 +1,34 @@
 import { StoreContext } from "../app";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 
-export function useFindAll(resourceName) {
+export function useFindAll(resourceName, { refresh } = {}) {
   let { data, fetched, updateCollection } = useContext(StoreContext);
+
+  const fetchResource = useCallback(() => {
+    fetch(`/api/${resourceName}s`)
+      .then(response => response.json())
+      .then(json => {
+        updateCollection(resourceName, json);
+      });
+  }, [resourceName, updateCollection]);
 
   useEffect(() => {
     if (!fetched.has(resourceName)) {
-      fetch(`/api/${resourceName}s`)
-        .then(response => response.json())
-        .then(json => {
-          updateCollection(resourceName, json);
-        });
+      fetchResource();
     }
-  }, [resourceName, fetched, updateCollection]);
+  }, [fetchResource, fetched, resourceName]);
+
+  useEffect(() => {
+    if (refresh) {
+      let intervalId = setInterval(() => {
+        fetchResource();
+      }, refresh);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
+  }, [fetchResource, refresh]);
 
   let collection = data[resourceName] || [];
 
