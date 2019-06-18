@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import "./server";
+import startServer from "./start-server";
 import "./app.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
@@ -8,6 +8,10 @@ import Admin from "./pages/admin";
 const StoreContext = React.createContext();
 
 function App() {
+  if (process.env.REACT_APP_MIRAGE_ENABLED) {
+    startServer();
+  }
+
   let [data, setData] = useState({});
   let [fetched, setFetched] = useState(new Set([]));
 
