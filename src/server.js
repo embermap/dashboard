@@ -57,6 +57,11 @@ window.server = new Server({
         text: "Ipsum",
         position: 4
       });
+      server.create("todo", {
+        author: "Sam",
+        text: "Dolor",
+        position: 5
+      });
     }
   }
 });

@@ -29,30 +29,10 @@ export default function() {
         <p className="text-gray-500 text-2xl uppercase">This week</p>
         <div className="flex mt-2">
           <div className="w-1/2">
-            <p className="text-white font-bold text-2xl flex items-center">
-              Ryan
-              {isLoading && <Spinner />}
-            </p>
-            <ul className="text-white text-2xl">
-              {ryansTodos.map(todo => (
-                <li className="ml-4" key={todo.id}>
-                  – {todo.text}
-                </li>
-              ))}
-            </ul>
+            <TodoList name="Ryan" todos={ryansTodos} isLoading={isLoading} />
           </div>
           <div className="w-1/2">
-            <p className="text-white font-bold text-2xl flex items-center">
-              Sam
-              {isLoading && <Spinner />}
-            </p>
-            <ul className="text-white text-2xl">
-              {samsTodos.map(todo => (
-                <li className="ml-4" key={todo.id}>
-                  – {todo.text}
-                </li>
-              ))}
-            </ul>
+            <TodoList name="Sam" todos={samsTodos} isLoading={isLoading} />
           </div>
         </div>
       </div>
@@ -73,6 +53,31 @@ export default function() {
         </button>
       </div>
     </div>
+  );
+}
+
+function TodoList({ name, todos, isLoading }) {
+  return (
+    <>
+      <p className="text-white font-bold text-2xl flex items-center">
+        {name}
+        {isLoading && <Spinner />}
+      </p>
+      <ul className="text-white text-2xl h-40 overflow-y-hidden relative">
+        {todos.map(todo => (
+          <li className="ml-4" key={todo.id}>
+            – {todo.text}
+          </li>
+        ))}
+        <div
+          className="absolute bottom-0 inset-x-0 h-16"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(26,32,44,0), rgba(26,32,44,1))"
+          }}
+        />
+      </ul>
+    </>
   );
 }
 
