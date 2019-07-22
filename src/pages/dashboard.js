@@ -21,7 +21,10 @@ export default function() {
       <header className="bg-gray-900 pt-16">
         <p className="text-gray-500 text-2xl uppercase">Top priority</p>
         <p className="text-white font-semibold text-4xl leading-snug">
-          Ship ember-cli-mirage@1.1.0 that depends on @miragejs/server
+          Figure out top priority{" "}
+          <span role="img" aria-label="smile">
+            🙂
+          </span>
         </p>
       </header>
 
