@@ -21,10 +21,7 @@ export default function() {
       <header className="bg-gray-900 pt-16">
         <p className="text-gray-500 text-2xl uppercase">Top priority</p>
         <p className="text-white font-semibold text-4xl leading-snug">
-          Figure out top priority{" "}
-          <span role="img" aria-label="smile">
-            🙂
-          </span>
+          What are you going to send to Mirage.js subscribers?
         </p>
       </header>
 
